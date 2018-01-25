@@ -5,21 +5,21 @@
 		.module('app')
 		.factory('blogService', blogService);
 
-	blogService.inject = ['$http', '$rootScope']
+	blogService.$inject = ['$http', '$rootScope']
 
 	function blogService($http, $rootScope) {
 		var service = {
 			getBlogItems: function (successCallback) {
-				debugger
 				$http({
 						url: $rootScope.appSettings.baseApiUrl + 'blog-items',
 						method: 'GET'
 					})
 					.then(function (response) {
-						successCallback(response.data)
+						successCallback(response.data);
 					})
 			}
-			
 		};
+
+		return service;
 	}
 })();
