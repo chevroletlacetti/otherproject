@@ -4,7 +4,7 @@ require('jquery-validation');
 require('./modal');
 window.angular = require('angular');
 require('angular-route');
-require('angular-ui-router');
+require('@uirouter/angularjs');
 require('jpkleemans-angular-validate');
 require('ngStorage');
 require('angular-base64');

@@ -1,0 +1,16 @@
+<section class="contact page__cell">
+	<form id="contact" name="contact" ng-submit="send(contact)" ng-validate="validationOptions">
+	<legend>Есть вопросы? Напишите мне:</legend>
+		<form-input title="Ваше имя" name="name" value="model.name"></form-input>
+		<form-input title="Ваша Фамилия" name="secondname" value="model.secondname"></form-input>
+		<form-input title="Email" name="email" value="model.email"></form-input>
+		<form-input title="Телефон" name="phone" value="model.phone" placeholder="+375 xx xxxxxxx"></form-input>
+		<form-input title="Сообщение" name="message" type="textarea" value="model.message"></form-input>
+		<button class="button__post">Отправить</button>
+	</form>
+	<div class="clearfix"></div>
+</section>
+
+
+
+<ng-include src="'/js/content/contacts/map.view.html'"></ng-include>

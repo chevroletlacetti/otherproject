@@ -2,7 +2,7 @@
 	angular
 		.module('app', ['ngRoute', 'ui.router', 'ngValidate', 'ngStorage', 'base64'])
 		.config(config)
-		run(run);
+	run(run);
 
 
 	config.$inject = ['$stateProvider', '$urlRouterProvider', '$validatorProvider', '$httpProvider', '$localStorageProvider'];
@@ -19,9 +19,26 @@
 				templateUrl: '/js/content/blog/blog.view.html',
 				controller: 'blogController'
 
+			})
+			.state('contacts', {
+				url: '/contacts',
+				templateUrl: '/js/content/contacts/contacts.view.html',
+				controller: 'contactsController'
+
 			});
 
 		$urlRouterProvider.otherwise('/');
+
+		$validatorProvider.setDefaults({
+			errorElement: 'span'
+		});
+		$validatorProvider.setDefaultMessages({
+			required: 'Это поле обязательно для заполнения.',
+			email: 'Неверный формат email-адреса.'
+		});
+		$validatorProvider.addMethod('tel', function (value, element) {
+			return /\+[\d\s\-]{9,}/.test(value);
+		}, 'Неверный формат номера телефона.');
 	}
 	run.$inject = ['$rootScope'];
 
@@ -29,5 +46,5 @@
 		$rootScope.appSettings = appSettings;
 	}
 })({
-	baseApiUrl: 'https://my-json-server.typicode.com/chevroletlacetti/otherproject/'
+	baseApiUrl: "https://my-json-server.typicode.com/chevroletlacetti/otherproject/"
 });
