@@ -2,7 +2,7 @@
 	angular
 		.module('app', ['ngRoute', 'ui.router', 'ngValidate', 'ngStorage', 'base64'])
 		.config(config)
-	run(run);
+		.run(run);
 
 
 	config.$inject = ['$stateProvider', '$urlRouterProvider', '$validatorProvider', '$httpProvider', '$localStorageProvider'];
