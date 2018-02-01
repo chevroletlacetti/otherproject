@@ -57,7 +57,8 @@
 			email: 'Неверный формат email-адреса.'
 		});
 		$validatorProvider.addMethod('tel', function (value, element) {
-			return /\+[\d\s\-]{9,}/.test(value);
+			return /\+375\([0-9]{2}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(value);
+//			/^\+375\\([0-9]{2}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/
 		}, 'Неверный формат номера телефона.');
 	}
 	run.$inject = ['$rootScope'];
