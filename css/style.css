@@ -145,7 +145,7 @@ header {
 
 /*about blog css*/
 
-.blog{
+.blog {
 	max-width: 1160px;
 	margin: 0 auto;
 }
@@ -254,6 +254,7 @@ span.error {
 }
 
 /*blog css*/
+
 .blog-item {
 	display: none;
 }
@@ -264,14 +265,20 @@ span.error {
 }
 
 .blog-content a {
-	position: absolute;
-	bottom: 25px;
-	right: 80px;
+	float: right;
+	font-size: 2rem;
+	margin-right: 2%;
 }
-.blog-content a:hover{
+
+.blog-content a:hover {
 	cursor: pointer;
 	transform: scale(1.3);
-	color:rgb(0, 0, 186)
+	color: rgb(0, 0, 186)
+}
+
+#modal img {
+	max-width: 50%;
+	margin: 0% 5% 5% 0%;
 }
 
 
