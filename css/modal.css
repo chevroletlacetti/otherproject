@@ -13,13 +13,14 @@
 #modal{
 	display: inline-block;
 	position: fixed;
-	top: 10%;
-	left: 20%;
-	right: 20%;
-	bottom: 10%;
+	top: 5%;
+	left: 5%;
+	right: 5%;
+	bottom: 5%;
 }
 #modal .blog__item,
 #modal .blog-content{
+	display: block;
 	max-width: 100%;
 	background-color: rgba(55, 55, 55, 1);
 	color: white;

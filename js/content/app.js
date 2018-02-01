@@ -20,6 +20,26 @@
 				controller: 'blogController'
 
 			})
+			.state('blog.item', {
+				url: "^/blog/{id:int}",
+				onEnter: ['$state', '$stateParams', '$http', '$compile', '$rootScope', 'blogService', function ($state, $stateParams, $http, $compile, $rootScope, blogService) {
+					blogService.get($stateParams.id, function (blog) {
+						$http.get('/js/content/blog/blog-modal.view.html')
+							.then(function (response) {
+								var scope = $rootScope.$new(true);
+								scope.model = blog;
+								$('<div/>').modal({
+									onRenderContent: function () {
+										return $compile(response.data)(scope);
+									},
+									onClose: function () {
+										$state.go('^');
+									}
+								});
+							});
+					});
+				}]
+			})
 			.state('contacts', {
 				url: '/contacts',
 				templateUrl: '/js/content/contacts/contacts.view.html',
