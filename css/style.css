@@ -223,16 +223,18 @@ form fieldset textarea {
 }
 
 .button__post {
-	margin: 1rem;
-	float: right;
-	font-size: 2rem;
-	border-radius: 20px;
+	margin: 0 auto;
+	width: 100%;
+	height: 70px;
+	border-radius: 0 0 20px 20px;
+	font-size: 3rem;
 }
 
 .button__post:hover {
-	transform: scale(1.2);
 	cursor: pointer;
-	background: linear-gradient(to bottom left, #383838, #ebebeb);
+	box-shadow: inset 0 0 30px rgba(122, 122, 122, 0.5);
+	font-size: 2.5rem;
+	background: linear-gradient(to top, rgba(226,226,226,0.7), rgba(0, 0, 0, 0.1));
 }
 
 input.error,
