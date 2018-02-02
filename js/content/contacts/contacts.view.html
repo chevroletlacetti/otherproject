@@ -1,6 +1,6 @@
-<section class="contact page__cell">
+<section class="contact page__cell" ng-hide="messageSent">
 	<form id="contact" name="contact" ng-submit="send(contact)" ng-validate="validationOptions">
-	<legend>Есть вопросы? Напишите мне:</legend>
+		<legend>Есть вопросы? Напишите мне:</legend>
 		<form-input title="Ваше имя" name="name" value="model.name"></form-input>
 		<form-input title="Ваша Фамилия" name="secondname" value="model.secondname"></form-input>
 		<form-input title="Email" name="email" value="model.email"></form-input>
@@ -11,6 +11,10 @@
 	<div class="clearfix"></div>
 </section>
 
+<section class="contact message-sent" ng-show="messageSent">
+	<h1>{{model.name}}, спасибо за обращение!</h1>
+	<button class="center" ng-click="reset()">Написать еще</button>
+</section>
 
 
 <ng-include src="'/js/content/contacts/map.view.html'"></ng-include>
