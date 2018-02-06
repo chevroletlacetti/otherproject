@@ -1,7 +1,9 @@
-<ng-owl-carousel class="owl-theme" owl-items="items" owl-properties="properties" owl-ready="ready($api)">
-
-
-	<img class="owl-lazy" style="padding: 5px;" data-ng-repeat="item in items" data-src="picture/{{item}}.png">
-
-
-</ng-owl-carousel>
+<section class="gallery" id="gallery">
+	<h1>Галерея</h1>
+	<div ng-repeat="item in gallery">
+		<h2>{{item.album}}</h2>
+		<div class="images" gallery>
+			<a ng-repeat="image in item.photos" title="{{image.alt}}" href="{{image.url}}"><img src="{{image.thumbnail}}" alt="{{image.alt}}" /></a>
+		</div>
+	</div>
+</section>
