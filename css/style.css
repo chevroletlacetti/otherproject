@@ -59,6 +59,15 @@ header {
 .form__entry {
 	float: right;
 }
+.form__entry form{
+	background: none;
+}
+.form__entry button{
+	width: 100%;
+}
+.form__entry span.error{
+	display: none;
+}
 
 
 
@@ -143,6 +152,26 @@ header {
 	text-align: center;
 }
 
+.video-two{
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+}
+.video-two-reset{
+	position: absolute;
+	font-size: 2rem;
+	top: 30%;
+	left: 40%;
+/*	transform: translate(-2.5rem, -2.5rem);*/
+	color: white;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.8);
+	padding: 1rem;
+	box-sizing: border-box;
+}
+.video-two-reset:hover{
+	transform: scale(1.2);
+}
 /*about blog css*/
 
 .blog {
@@ -312,3 +341,4 @@ footer .content {
 	text-align: center;
 	margin: 1rem 0;
 }
+

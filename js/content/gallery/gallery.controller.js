@@ -10,6 +10,7 @@
 	function galleryController($scope, galleryService) {
 		galleryService.getGallery(function(gallery){
 			$scope.gallery
+			
 		});
 	}
 

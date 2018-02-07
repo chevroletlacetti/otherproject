@@ -47,12 +47,12 @@
 
 			})
 
-		.state('gallery', {
-			url: '/gallery',
-			templateUrl: '/js/content/gallery/gallery.view.html',
-			controller: 'galleryController'
+			.state('gallery', {
+				url: '/gallery',
+				templateUrl: '/js/content/gallery/gallery.view.html',
+				controller: 'galleryController'
 
-		});
+			});
 
 		$urlRouterProvider.otherwise('/');
 
@@ -67,6 +67,18 @@
 			return /\+375\([0-9]{2}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(value);
 			//			/^\+375\\([0-9]{2}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/
 		}, 'Неверный формат номера телефона.');
+		$httpProvider.interceptors.push(['$q', function ($q) {
+			return {
+				'request': function (httpConfig) {
+					if (httpConfig.url.startsWith(appSettings.baseApiUrl) && $localStorageProvider.get('token')) {
+						httpConfig.headers['Authorization'] = $localStorageProvider.get('token');
+					}
+
+					return httpConfig;
+				}
+			};
+		}]);
+
 	}
 	run.$inject = ['$rootScope'];
 

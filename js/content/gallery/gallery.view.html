@@ -1,8 +1,8 @@
 <section class="gallery" id="gallery">
 	<h1>Галерея</h1>
-	<div ng-repeat="item in gallery">
+	<div ng-repeat="item in gallery" class="album">
 		<h2>{{item.album}}</h2>
-		<div class="images" gallery>
+		<div class="images">
 			<a ng-repeat="image in item.photos" title="{{image.alt}}" href="{{image.url}}"><img src="{{image.thumbnail}}" alt="{{image.alt}}" /></a>
 		</div>
 	</div>

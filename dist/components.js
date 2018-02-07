@@ -70,6 +70,129 @@
 
 (function () {
 	'use strict'
+
+	angular
+		.module('app')
+		.controller('menuController', menuController);
+
+	menuController.$inject = ['$scope', 'authService'];
+
+	function menuController($scope, authService) {
+		$scope.authorized = authService.isAuthorized();
+		$scope.validationOptions = {
+			rules: {
+				login: {
+					required: true,
+					email: true
+				},
+				password: {
+					required: true
+				}
+			}
+		};
+
+		$scope.login = function (form) {
+			if (!form.validate()) {
+				return false;
+			}
+
+			authService.login({
+					login: $scope.model.login,
+					password: $scope.model.password
+				},
+				function () {
+					$scope.authorized = true;
+				}
+			);
+		}
+
+		$scope.logout = function () {
+			authService.logout();
+			$scope.authorized = false;
+		}
+	}
+})();
+
+
+/***/ }),
+
+/***/ 101:
+/***/ (function(module, exports) {
+
+(function () {
+	angular
+		.module('app')
+		.factory('authService', authService);
+
+	authService.$inject = ['$localStorage', '$base64'];
+
+	function authService($localStorage, $base64) {
+		return {
+			login: function (model, successCalback) {
+				$localStorage.login = model.login;
+				$localStorage.token = `Basic ${$base64.encode(model.login + model.password)}`;
+				successCalback();
+			},
+			logout: function () {
+				delete $localStorage.login;
+				delete $localStorage.token;
+			},
+			isAuthorized: function () {
+				return $localStorage.token !== undefined;
+			}
+		}
+	}
+})();
+
+
+/***/ }),
+
+/***/ 102:
+/***/ (function(module, exports) {
+
+(function () {
+	'use strict'
+
+	angular
+		.module('app')
+		.factory('blogService', blogService);
+
+	blogService.$inject = ['$http', '$rootScope']
+
+	function blogService($http, $rootScope) {
+		var service = {
+			getBlogItems: function (successCallback) {
+				$http({
+						url: $rootScope.appSettings.baseApiUrl + 'blog-items',
+						method: 'GET'
+					})
+					.then(function (response) {
+						successCallback(response.data);
+					})
+			},
+			get: function (id, successCallback) {
+				$http({
+						url: $rootScope.appSettings.baseApiUrl + 'blog-items/' + id,
+						method: 'GET'
+					})
+					.then(function (response) {
+						successCallback(response.data);
+					})
+			}
+		};
+
+		return service;
+	}
+})();
+
+
+/***/ }),
+
+/***/ 103:
+/***/ (function(module, exports) {
+
+(function () {
+	'use strict'
 	var lastId = 1000;
 	angular
 		.module('app')
@@ -101,7 +224,7 @@
 
 /***/ }),
 
-/***/ 101:
+/***/ 104:
 /***/ (function(module, exports) {
 
 (function () {
@@ -147,7 +270,10 @@ __webpack_require__(97);
 __webpack_require__(98);
 __webpack_require__(99);
 __webpack_require__(100);
-module.exports = __webpack_require__(101);
+__webpack_require__(101);
+__webpack_require__(102);
+__webpack_require__(103);
+module.exports = __webpack_require__(104);
 
 
 /***/ }),
@@ -162,14 +288,39 @@ module.exports = __webpack_require__(101);
 		.module('app')
 		.controller('aboutController', aboutController);
 
-	aboutController.$inject = ['$scope'];
+	aboutController.$inject = ['$scope', '$sessionStorage'];
 
-	function aboutController($scope) {
+	function aboutController($scope, $sessionStorage) {
 		$scope.model = {
 			name: 'Вадим Стрелковский',
 			birthday: '22.08.1991',
 			education: 'Высшее'
 		}
+
+		$scope.video = {
+			time: $sessionStorage.videoTime || 0,
+			sources: [{
+				type: 'video/mp4',
+				src: '/picture/SampleVideo_1280x720_1mb.mp4',
+			}],
+			onended: function () {
+				$scope.video.ended = $sessionStorage.videoEnded = true;
+				$scope.$apply();
+			},
+			ended: $sessionStorage.videoEnded,
+			control: {},
+			reset: function () {
+				if ($scope.video.control.reset) {
+					$scope.video.control.reset()
+				}
+
+				$scope.video.ended = $sessionStorage.videoEnded = false;
+			}
+		};
+
+		$scope.$watch('video.time', function (newValue) {
+			$sessionStorage.videoTime = newValue;
+		});
 	}
 
 })();
@@ -434,6 +585,52 @@ module.exports = __webpack_require__(101);
 /***/ (function(module, exports) {
 
 (function () {
+	'use strict'
+
+	angular
+		.module('app')
+		.directive('ngVideo', video);
+
+	function video() {
+		return {
+			restrict: 'E',
+			scope: {
+				currentTime: '=',
+				sources: '=',
+				onEnded: '&',
+				control: '='
+			},
+			replace: true,
+			templateUrl: '/js/content/directive/ngvideo.directive.html',
+			link: function (scope, element, attrs) {
+				element[0].currentTime = scope.currentTime || 0;
+
+				var control = scope.control || {};
+				control.reset = function () {
+					element[0].currentTime = 0;
+					element[0].play();
+				}
+
+				element[0].onended = function () {
+					scope.onEnded();
+				};
+
+				element[0].ontimeupdate = function () {
+					scope.currentTime = element[0].currentTime;
+					scope.$apply();
+				};
+			}
+		}
+	}
+})();
+
+
+/***/ }),
+
+/***/ 98:
+/***/ (function(module, exports) {
+
+(function () {
 	'user strict';
 	angular
 		.module('app')
@@ -463,7 +660,7 @@ module.exports = __webpack_require__(101);
 
 /***/ }),
 
-/***/ 98:
+/***/ 99:
 /***/ (function(module, exports) {
 
 (function () {
@@ -478,50 +675,10 @@ module.exports = __webpack_require__(101);
 	function galleryController($scope, galleryService) {
 		galleryService.getGallery(function(gallery){
 			$scope.gallery
+			
 		});
 	}
 
-})();
-
-
-/***/ }),
-
-/***/ 99:
-/***/ (function(module, exports) {
-
-(function () {
-	'use strict'
-
-	angular
-		.module('app')
-		.factory('blogService', blogService);
-
-	blogService.$inject = ['$http', '$rootScope']
-
-	function blogService($http, $rootScope) {
-		var service = {
-			getBlogItems: function (successCallback) {
-				$http({
-						url: $rootScope.appSettings.baseApiUrl + 'blog-items',
-						method: 'GET'
-					})
-					.then(function (response) {
-						successCallback(response.data);
-					})
-			},
-			get: function (id, successCallback) {
-				$http({
-						url: $rootScope.appSettings.baseApiUrl + 'blog-items/' + id,
-						method: 'GET'
-					})
-					.then(function (response) {
-						successCallback(response.data);
-					})
-			}
-		};
-
-		return service;
-	}
 })();
 
 

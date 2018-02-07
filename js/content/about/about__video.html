@@ -1,7 +1,11 @@
 <section>
 	<div class="video">
 		<iframe width="400" height="200" src="https://www.youtube.com/embed/l87kS4LtGVo" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-		<iframe width="400" height="200" src="https://www.youtube.com/embed/l87kS4LtGVo" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-		<iframe width="400" height="200" src="https://www.youtube.com/embed/l87kS4LtGVo" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
+		<div class="video-two">
+			<ng-video class="center" sources="video.sources" width="400" height="200" current-time="video.time" control="video.control" on-ended="video.onended()" autoplay>
+			</ng-video>
+			<i ng-if="video.ended === true" class="fas fa-play video-two-reset" ng-click="video.reset()"></i>
+		</div>
 	</div>
 </section>

@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>other project one</title>
+	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/fontawesome/font-awesome.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/modal.css">
@@ -20,9 +21,15 @@
 							<span>Персональная страница</span>
 						</div>
 					</a>
-					<div class="form__entry">
-						<input type="text" />
-						<input type="text" /></div>
+					<div class="form__entry" ng-controller="menuController">
+						<form id="loginForm" name="loginForm" ng-submit="login(loginForm)" ng-validate="validationOptions">
+							<div>
+								<input title="Логин" name="login"  placeholder="Логин" />
+								<input title="Пароль" name="password" type="password" placeholder="Пароль" />
+							</div>
+							<button>Войти</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -31,7 +38,7 @@
 			<div class="content">
 				<div class="nav__container">
 					<a ui-sref="about">
-						<div class="nav__item first">Главная</div>
+						<div class="nav__item">Главная</div>
 					</a>
 					<a ui-sref="blog">
 						<div class="nav__item">Блог</div>
@@ -40,10 +47,10 @@
 						<div class="nav__item">Галерея</div>
 					</a>
 					<a ui-sref="contacts">
-						<div class="nav__item last">Контакты</div>
+						<div class="nav__item">Контакты</div>
 					</a>
 					<a ui-sref="about">
-						<div class="nav__item first">test</div>
+						<div class="nav__item">test</div>
 					</a>
 				</div>
 				<hr>
